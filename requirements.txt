@@ -1,0 +1,4 @@
+python-nmap==0.6.1
+shodan==1.10.3
+tableprint
+paramiko==2.0.8
