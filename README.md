@@ -19,6 +19,7 @@ chmod +x Snowwolf.sh
 <img src="/image/sqlmap.jpg" />
 <img src="/image/shodan.jpg" />
 <img src="/image/shodansearch.jpg" />
+
 自动化漏洞利用为cve-exploit.sh脚本，目前仅支持cve-2018-9995,cve-2018-10933,后期慢慢更新
 
 cve-2018-9995可以配合shodan进行利用
